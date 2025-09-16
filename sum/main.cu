@@ -10,10 +10,7 @@ extern "C"
 
 __global__ void sum(float *a, int n)
 {
-	int i;
-
-	i = blockIdx.x * blockDim.x + threadIdx.x;
-	a[i] += a[i + (n + 1) / 2];
+	// TODO: Implement the summation.
 }
 
 int main(void)
@@ -26,14 +23,13 @@ int main(void)
 	int k;
 
 	a.h = geometric(M_PI, M_LN2, N);
-	CHECK_CUDA(cudaMalloc(&a.d, N * sizeof(float)));
-	CHECK_CUDA(cudaMemcpy(a.d, a.h, N * sizeof(float), cudaMemcpyHostToDevice));
+	// TODO: Allocate a.d on the GPU.
+	// TODO: Copy a.h to a.d.
 	clock_gettime(CLOCK_MONOTONIC, &t);
-	for (k = N; k > 1; k = (k + 1) / 2)
-		sum<<<(k / 2 - 1) / BLOCK_SIZE + 1, BLOCK_SIZE>>>(a.d, k);
-	CHECK_CUDA(cudaDeviceSynchronize());
+	// TODO: Launch the kernel repeatedly until we have the final sum.
+	// TODO: Synchronize with the device.
 	time_(t);
-	CHECK_CUDA(cudaMemcpy(a.h, a.d, N * sizeof(float), cudaMemcpyDeviceToHost));
+	// TODO: Copy the result back to the host.
 	print(a.h, 1);
 	return 0;
 }

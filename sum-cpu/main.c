@@ -8,13 +8,7 @@
 
 float sum(float *a, int n)
 {
-	float s;
-	int i;
-
-	s = 0.0;
-	for (i = 0; i < n; i++)
-		s += a[i];
-	return s;
+	// TODO: Implement the summation on the CPU.
 }
 
 int main(void)

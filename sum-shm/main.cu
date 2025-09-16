@@ -12,20 +12,7 @@ extern "C"
 
 __global__ void sum(float *a, int n)
 {
-	int i;
-	__shared__ float s[BLOCK_SIZE];
-
-	i = blockIdx.x * blockDim.x + threadIdx.x;
-	s[threadIdx.x] = a[i];
-	__syncthreads();
-	for (int stride = blockDim.x / 2; stride > 0; stride /= 2)
-	{
-		if (threadIdx.x < stride)
-			s[threadIdx.x] += s[threadIdx.x + stride];
-		__syncthreads();
-	}
-	if (threadIdx.x == 0)
-		a[blockIdx.x] = s[0];
+	// TODO: Implement the summation on the GPU using shared memory.
 }
 
 int main(void)
@@ -38,18 +25,13 @@ int main(void)
 	int k;
 
 	a.h = geometric(M_PI, M_LN2, N);
-	CHECK_CUDA(cudaMalloc(&a.d, N * sizeof(float)));
-	CHECK_CUDA(cudaMemcpy(a.d, a.h, N * sizeof(float), cudaMemcpyHostToDevice));
+	// TODO: Allocate a.d on the GPU.
+	// TODO: Copy a.h to a.d.
 	clock_gettime(CLOCK_MONOTONIC, &t);
-	for (k = N; k > 1; k = (k - 1) / BLOCK_SIZE + 1)
-	{
-		if (k <= 10)
-			print(a.h, k);
-		sum<<<(k - 1) / BLOCK_SIZE + 1, k / 2 > BLOCK_SIZE ? BLOCK_SIZE : k / 2>>>(a.d, k);
-	}
-	CHECK_CUDA(cudaDeviceSynchronize());
+	// TODO: Launch the kernel repeatedly until we have the final sum.
+	// TODO: Synchronize with the device.
 	time_(t);
-	CHECK_CUDA(cudaMemcpy(a.h, a.d, N * sizeof(float), cudaMemcpyDeviceToHost));
+	// TODO: Copy the result back to the host.
 	print(a.h, 1);
 	return 0;
 }

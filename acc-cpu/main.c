@@ -11,8 +11,7 @@
 
 void accumulate(float *a, float *b, int n)
 {
-	for (int i = 0; i < n; i++)
-		a[i] += b[i];
+	// TODO: Implement the accumulation on the CPU.
 }
 
 int main(void)

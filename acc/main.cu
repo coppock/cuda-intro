@@ -13,11 +13,7 @@ extern "C"
 
 __global__ void accumulate(float *a, float *b, int n)
 {
-	int i;
-
-	i = blockIdx.x * blockDim.x + threadIdx.x;
-	if (i < N)
-		a[i] += b[i];
+	// TODO: Implement the accumulation on the GPU.
 }
 
 int main(void)
@@ -34,15 +30,13 @@ int main(void)
 	print(a.h, N);
 	print(b.h, N);
 #endif
-	CHECK_CUDA(cudaMalloc(&a.d, N * sizeof(float)));
-	CHECK_CUDA(cudaMalloc(&b.d, N * sizeof(float)));
-	CHECK_CUDA(cudaMemcpy(a.d, a.h, N * sizeof(float), cudaMemcpyHostToDevice));
-	CHECK_CUDA(cudaMemcpy(b.d, b.h, N * sizeof(float), cudaMemcpyHostToDevice));
+	// TODO: Allocate a.d and b.d on the GPU.
+	// TODO: Copy a.h to a.d and b.h to b.d.
 	clock_gettime(CLOCK_MONOTONIC, &t);
-	accumulate<<<(N + BLOCK_SIZE - 1) / BLOCK_SIZE, BLOCK_SIZE>>>(a.d, b.d, N);
-        CHECK_CUDA(cudaDeviceSynchronize());
+	// TODO: Launch the kernel.
+	// TODO: Synchronize with the device.
 	time_(t);
-	CHECK_CUDA(cudaMemcpy(a.h, a.d, N * sizeof(float), cudaMemcpyDeviceToHost));
+	// TODO: Copy the result back to the host.
 #if N <= 10
 	print(a.h, N);
 #endif
