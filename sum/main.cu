@@ -5,7 +5,7 @@ extern "C"
 #include "seq.h"
 }
 
-#define N MEGA
+#define N 10
 #define BLOCK_SIZE 256
 
 __global__ void sum(float *a, int n)
@@ -31,6 +31,7 @@ int main(void)
 	clock_gettime(CLOCK_MONOTONIC, &t);
 	for (k = N; k > 1; k = (k + 1) / 2)
 		sum<<<(k / 2 - 1) / BLOCK_SIZE + 1, BLOCK_SIZE>>>(a.d, k);
+	CHECK_CUDA(cudaDeviceSynchronize());
 	time_(t);
 	CHECK_CUDA(cudaMemcpy(a.h, a.d, N * sizeof(float), cudaMemcpyDeviceToHost));
 	print(a.h, 1);

@@ -22,6 +22,10 @@ int main(void)
 
 	a = geometric(M_PI, M_E, N);
 	b = arithmetic(M_SQRT2, M_SQRT1_2, N);
+#if N <= 10
+	print(a, N);
+	print(b, N);
+#endif
 	clock_gettime(CLOCK_MONOTONIC, &t);
 	accumulate(a, b, N);
 	time_(t);

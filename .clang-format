@@ -1,0 +1,5 @@
+FromStyle: WebKit
+ColumnLimit: 79
+TabWidth: 8
+UseTabs: Always
+IndentWidth: 8

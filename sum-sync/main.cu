@@ -7,7 +7,7 @@ extern "C"
 #include "seq.h"
 }
 
-#define N 100 * MEGA
+#define N 10
 #define BLOCK_SIZE 256
 
 __global__ void sum(float *a, int n)
@@ -42,6 +42,7 @@ int main(void)
 			print(a.h, k);
 		sum<<<(k / 2 - 1) / BLOCK_SIZE + 1, k / 2 > BLOCK_SIZE ? BLOCK_SIZE : k / 2>>>(a.d, k);
 	}
+	CHECK_CUDA(cudaDeviceSynchronize());
 	time_(t);
 	CHECK_CUDA(cudaMemcpy(a.h, a.d, N * sizeof(float), cudaMemcpyDeviceToHost));
 	print(a.h, 1);

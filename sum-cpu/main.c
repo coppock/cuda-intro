@@ -4,7 +4,7 @@
 #include "io.h"
 #include "seq.h"
 
-#define N MEGA
+#define N 10
 
 float sum(float *a, int n)
 {
